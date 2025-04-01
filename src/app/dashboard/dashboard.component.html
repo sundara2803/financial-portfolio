@@ -1,0 +1,79 @@
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6">Portfolio Dashboard</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <!-- Portfolio Summary Cards -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Total Value</h2>
+        <p class="text-2xl">{{ portfolioData?.totalValue | currencyFormat }}</p>
+        <p class="text-sm" [appPercentage]="portfolioData?.totalChange"></p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Today's Gain/Loss</h2>
+        <p class="text-2xl" [ngClass]="{'text-green-500': portfolioData?.dailyChange >= 0, 'text-red-500': portfolioData?.dailyChange < 0}">
+          {{ portfolioData?.dailyChange | currencyFormat }}
+        </p>
+        <p class="text-sm" [appPercentage]="portfolioData?.dailyChangePercent"></p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Annual Return</h2>
+        <p class="text-2xl" [ngClass]="{'text-green-500': portfolioData?.annualReturn >= 0, 'text-red-500': portfolioData?.annualReturn < 0}">
+          {{ portfolioData?.annualReturn | currencyFormat }}
+        </p>
+        <p class="text-sm" [appPercentage]="portfolioData?.annualReturnPercent"></p>
+      </div>
+    </div>
+    
+    <!-- Performance Chart -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">Performance</h2>
+      <div class="h-80">
+        <canvas baseChart
+          [data]="performanceChartData"
+          [options]="chartOptions"
+          [type]="performanceChartType">
+        </canvas>
+      </div>
+    </div>
+    
+    <!-- Allocation Chart -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Asset Allocation</h2>
+        <div class="h-64">
+          <canvas baseChart
+            [data]="allocationChartData"
+            [options]="chartOptions"
+            [type]="allocationChartType">
+          </canvas>
+        </div>
+      </div>
+      
+      <!-- Recent Transactions -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold mb-4">Recent Transactions</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Asset</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr *ngFor="let transaction of portfolioData?.recentTransactions">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ transaction.date }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ transaction.asset }}</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm" [ngClass]="{'text-green-500': transaction.type === 'Buy', 'text-red-500': transaction.type === 'Sell'}">
+                  {{ transaction.amount | currencyFormat }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
