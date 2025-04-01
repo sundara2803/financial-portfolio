@@ -8,6 +8,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  
   portfolioData: any;
   performanceChartData!: ChartConfiguration['data'];
   allocationChartData!: ChartConfiguration['data'];
