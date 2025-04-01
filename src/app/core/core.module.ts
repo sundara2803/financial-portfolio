@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MockBackendService } from './services/mock-backend.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './interceptors/api.interceptor';
+import { PortfolioService } from './services/portfolio.service';
 
 @NgModule({
   declarations: [],
@@ -10,7 +10,7 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
     CommonModule
   ],
   providers: [
-    MockBackendService,
+    PortfolioService,
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
   ]
 })

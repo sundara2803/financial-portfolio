@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Investment } from '../../models/investment.model';
+import { PortfolioService } from '../../../core/services/portfolio.service';
 
 @Component({
   selector: 'app-investment-form',
@@ -8,12 +8,11 @@ import { Investment } from '../../models/investment.model';
   styleUrls: ['./investment-form.component.scss']
 })
 export class InvestmentFormComponent {
-  @Output() formSubmit = new EventEmitter<Investment>();
-  investmentForm: FormGroup;
+  investmentForm!: FormGroup;
   assetTypes = ['Stock', 'Bond', 'ETF', 'Mutual Fund', 'Real Estate', 'Crypto'];
   today = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private portfolioService: PortfolioService) {
     this.investmentForm = this.fb.group({
       assetType: ['', Validators.required],
       assetName: ['', [Validators.required, Validators.minLength(2)]],
@@ -26,20 +25,23 @@ export class InvestmentFormComponent {
 
   onSubmit(): void {
     if (this.investmentForm.valid) {
-      this.formSubmit.emit(this.investmentForm.value);
-      this.investmentForm.reset();
+      const investment = this.investmentForm.value;
+  
+      this.portfolioService.addInvestment(investment).subscribe({
+        next: (response) => {
+          console.log('Investment added:', response);
+          this.investmentForm.reset();
+        },
+        error: (error) => {
+          console.error('Error adding investment:', error);
+        }
+      });
+  
     } else {
       this.markFormGroupTouched(this.investmentForm);
     }
   }
-
-  onReview(): void {
-    if (this.investmentForm.valid) {
-      this.formSubmit.emit(this.investmentForm.value);
-    } else {
-      this.markFormGroupTouched(this.investmentForm);
-    }
-  }
+  
 
   private markFormGroupTouched(formGroup: FormGroup): void {
     Object.values(formGroup.controls).forEach(control => {

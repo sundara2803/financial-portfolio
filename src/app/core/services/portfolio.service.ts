@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { MockBackendService } from './mock-backend.service';
+import { delay, Observable, of } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Investment } from '../models/investment.model';
+import { PortfolioSummary } from '../models/portfolio.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PortfolioService {
-  constructor(
-    private http: HttpClient,
-    private mockBackend: MockBackendService
-  ) { }
+  constructor(private http: HttpClient) { }
+  private apiBaseUrl = environment.apiBaseUrl; 
 
-  getPortfolioSummary(): Observable<any> {
-    return this.mockBackend.getPortfolioSummary();
+  getPortfolioSummary(): Observable<PortfolioSummary[]> {
+    return this.http.get<PortfolioSummary[]>(`${this.apiBaseUrl}portfoliosummary`); 
   }
 
-  addInvestment(investment: any): Observable<any> {
-    return this.mockBackend.addInvestment(investment);
+  addInvestment(investment: Investment): Observable<any> {
+    console.log('Investment added:', investment);
+    return of({ success: true }).pipe(delay(500));
   }
 }
