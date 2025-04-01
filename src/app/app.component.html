@@ -1,5 +1,4 @@
 <div class="min-h-screen bg-gray-100">
-  <!-- Navigation -->
   <nav class="bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
@@ -7,15 +6,11 @@
           <span class="text-xl font-bold text-blue-600">Portfolio Tracker</span>
         </div>
         <div class="flex space-x-4">
-          <a 
-            routerLink="/dashboard" 
-            routerLinkActive="text-blue-600 border-b-2 border-blue-600"
+          <a routerLink="/dashboard" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
             class="inline-flex items-center px-1 pt-1 text-sm font-medium">
             Dashboard
           </a>
-          <a 
-            routerLink="/investments" 
-            routerLinkActive="text-blue-600 border-b-2 border-blue-600"
+          <a routerLink="/investments" routerLinkActive="text-blue-600 border-b-2 border-blue-600"
             class="inline-flex items-center px-1 pt-1 text-sm font-medium">
             Investments
           </a>
@@ -24,7 +19,7 @@
     </div>
   </nav>
 
-  <!-- Main Content -->
+
   <main class="py-6">
     <router-outlet></router-outlet>
   </main>

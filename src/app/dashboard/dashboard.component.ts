@@ -4,6 +4,7 @@ import { PortfolioSummary } from '../core/models/portfolio.model';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { Subject } from 'rxjs';
 import { takeUntil, catchError, finalize } from 'rxjs/operators';
+import { SnackbarService } from '../core/services/snackbar.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,7 +23,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject<void>(); 
 
-  constructor(private portfolioService: PortfolioService) {}
+  constructor(private portfolioService: PortfolioService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.fetchPortfolioData();
@@ -30,26 +31,26 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   private fetchPortfolioData(): void {
     this.loading = true;
-
     this.portfolioService.getPortfolioSummary()
       .pipe(
         takeUntil(this.unsubscribe$),
         catchError(error => {
-          console.error("Error fetching portfolio data:", error);
+          this.snackbarService.showErrorMessage("Error fetching portfolio data: " + (error.message || error));
           return [];
         }),
-        finalize(() => this.loading = false) 
+        finalize(() => this.loading = false)
       )
-      .subscribe(data => {
-        if (data.length > 0) {
-          this.portfolioData = data[0];
-          this.initCharts();
-        }else{
+      .subscribe((response:any) => {
+        if (response.status === 'success') {
+          this.portfolioData = response?.data[0];
+          this.snackbarService.showSuccessMessage('Portfolio loaded successfully!');
+          this.initCharts(); 
+        } else {
           this.portfolioData = null;
         }
       });
   }
-
+  
   private initCharts(): void {
     if (!this.portfolioData) return;
 

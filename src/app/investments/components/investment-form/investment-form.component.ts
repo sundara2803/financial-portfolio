@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService } from '../../../core/services/portfolio.service';
+import { SnackbarService } from 'src/app/core/services/snackbar.service';
+import { Investment } from '../../../core/models/investment.model';
 
 @Component({
   selector: 'app-investment-form',
@@ -12,7 +14,7 @@ export class InvestmentFormComponent {
   assetTypes = ['Stock', 'Bond', 'ETF', 'Mutual Fund', 'Real Estate', 'Crypto'];
   today = new Date().toISOString().split('T')[0];
 
-  constructor(private fb: FormBuilder, private portfolioService: PortfolioService) {
+  constructor(private fb: FormBuilder, private portfolioService: PortfolioService, private snackbarService: SnackbarService) {
     this.investmentForm = this.fb.group({
       assetType: ['', Validators.required],
       assetName: ['', [Validators.required, Validators.minLength(2)]],
@@ -25,18 +27,19 @@ export class InvestmentFormComponent {
 
   onSubmit(): void {
     if (this.investmentForm.valid) {
-      const investment = this.investmentForm.value;
-  
+      const investment: Investment = this.investmentForm.value;
+
       this.portfolioService.addInvestment(investment).subscribe({
         next: (response) => {
-          console.log('Investment added:', response);
-          this.investmentForm.reset();
+          if(response.status === 'success'){
+            this.snackbarService.showSuccessMessage('Investment added: ' + response?.data?.assetName);
+            this.investmentForm.reset();
+          }
         },
         error: (error) => {
-          console.error('Error adding investment:', error);
+          this.snackbarService.showErrorMessage('Error adding investment: ' + (error.message || error));
         }
       });
-  
     } else {
       this.markFormGroupTouched(this.investmentForm);
     }

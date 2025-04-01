@@ -1,15 +1,12 @@
 <div class="container mx-auto px-4 py-6">
   <h1 class="text-3xl font-bold mb-6 text-gray-800">Portfolio Dashboard</h1>
 
-  <!--  Loader: Shown while data is loading -->
   <div *ngIf="loading" class="flex justify-center items-center h-32">
     <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-opacity-50"></div>
   </div>
 
-  <!--  Main Content: Shown when data is available -->
   <ng-container *ngIf="!loading">
     
-    <!-- Summary Cards -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-medium text-gray-600">Total Value</h2>
@@ -38,7 +35,6 @@
       </div>
     </div>
 
-    <!-- Performance Chart -->
     <div class="bg-white rounded-lg shadow p-4 mb-6">
       <h2 class="text-lg font-medium mb-4 text-gray-800">Performance</h2>
       <div class="relative h-72 w-full">
@@ -50,10 +46,8 @@
       </div>
     </div>
 
-    <!-- Bottom Section -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       
-      <!-- Asset Allocation Chart -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-medium mb-4 text-gray-800">Asset Allocation</h2>
         <div class="relative h-72 w-full mx-auto" style="max-width: 400px;">
@@ -65,7 +59,6 @@
         </div>
       </div>
 
-      <!-- Recent Transactions -->
       <div class="bg-white rounded-lg shadow p-4">
         <h2 class="text-lg font-medium mb-4 text-gray-800">Recent Transactions</h2>
         <div class="overflow-auto max-h-72">
@@ -83,13 +76,12 @@
                 <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{{ transaction.asset }}</td>
                 <td class="px-4 py-3 whitespace-nowrap text-sm" 
                     [ngClass]="{'text-green-600': transaction.type === 'Buy', 'text-red-600': transaction.type === 'Sell'}">
-                  {{ transaction.amount ?? 0 | currencyFormat }}
+                  {{ transaction.amount | currencyFormat }}
                 </td>
               </tr>
             </tbody>
           </table>
           
-          <!--  Show if no transactions are available -->
           <ng-template #noTransactions>
             <p class="text-center text-gray-500 py-4">No recent transactions available.</p>
           </ng-template>

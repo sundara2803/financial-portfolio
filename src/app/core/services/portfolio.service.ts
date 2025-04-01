@@ -10,14 +10,18 @@ import { PortfolioSummary } from '../models/portfolio.model';
 })
 export class PortfolioService {
   constructor(private http: HttpClient) { }
-  private apiBaseUrl = environment.apiBaseUrl; 
+  private apiBaseUrl = environment.apiBaseUrl;
 
   getPortfolioSummary(): Observable<PortfolioSummary[]> {
-    return this.http.get<PortfolioSummary[]>(`${this.apiBaseUrl}portfoliosummary`); 
+    return this.http.get<PortfolioSummary[]>(`${this.apiBaseUrl}portfoliosummary`);
   }
 
   addInvestment(investment: Investment): Observable<any> {
-    console.log('Investment added:', investment);
-    return of({ success: true }).pipe(delay(500));
+    return of({
+      status: 'success',
+      message: 'Request was successful',
+      data: investment || null,
+      error: null
+    }).pipe(delay(500));
   }
 }

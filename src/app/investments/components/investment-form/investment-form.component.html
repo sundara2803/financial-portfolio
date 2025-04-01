@@ -1,83 +1,77 @@
 <div class="max-w-md mx-auto my-8">
-    <div class="card bg-white rounded-xl shadow-md p-8">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">Add New Investment</h2>
-      
-      <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()" class="space-y-4">
-        <!-- Asset Type -->
-        <div>
-          <label for="assetType" class="block text-sm font-medium text-gray-700 mb-1">Asset Type *</label>
-          <select id="assetType" formControlName="assetType"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-            <option value="">Select asset type</option>
-            <option *ngFor="let type of assetTypes" [value]="type">{{ type }}</option>
-          </select>
-          <div *ngIf="investmentForm.get('assetType')?.touched && investmentForm.get('assetType')?.errors" 
-               class="text-red-600 text-xs mt-1">
-            Asset type is required
-          </div>
+  <div class="card bg-white rounded-xl shadow-md p-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">Add New Investment</h2>
+
+    <form [formGroup]="investmentForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+      <div>
+        <label for="assetType" class="block text-sm font-medium text-gray-700 mb-1">Asset Type *</label>
+        <select id="assetType" formControlName="assetType"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+          <option value="">Select asset type</option>
+          <option *ngFor="let type of assetTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="investmentForm.get('assetType')?.touched && investmentForm.get('assetType')?.errors"
+          class="text-red-600 text-xs mt-1">
+          Asset type is required
         </div>
-        
-        <!-- Asset Name -->
-        <div>
-          <label for="assetName" class="block text-sm font-medium text-gray-700 mb-1">Asset Name *</label>
-          <input id="assetName" type="text" formControlName="assetName"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-          <div *ngIf="investmentForm.get('assetName')?.touched && investmentForm.get('assetName')?.errors" 
-               class="text-red-600 text-xs mt-1">
-            <div *ngIf="investmentForm.get('assetName')?.errors?.['required']">Asset name is required</div>
-            <div *ngIf="investmentForm.get('assetName')?.errors?.['minlength']">Minimum 2 characters required</div>
-          </div>
+      </div>
+
+      <div>
+        <label for="assetName" class="block text-sm font-medium text-gray-700 mb-1">Asset Name *</label>
+        <input id="assetName" type="text" formControlName="assetName"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <div *ngIf="investmentForm.get('assetName')?.touched && investmentForm.get('assetName')?.errors"
+          class="text-red-600 text-xs mt-1">
+          <div *ngIf="investmentForm.get('assetName')?.errors?.['required']">Asset name is required</div>
+          <div *ngIf="investmentForm.get('assetName')?.errors?.['minlength']">Minimum 2 characters required</div>
         </div>
-        
-        <!-- Quantity -->
-        <div>
-          <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity *</label>
-          <input id="quantity" type="number" step="0.01" formControlName="quantity"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-          <div *ngIf="investmentForm.get('quantity')?.touched && investmentForm.get('quantity')?.errors" 
-               class="text-red-600 text-xs mt-1">
-            <div *ngIf="investmentForm.get('quantity')?.errors?.['required']">Quantity is required</div>
-            <div *ngIf="investmentForm.get('quantity')?.errors?.['min']">Must be greater than 0</div>
-          </div>
+      </div>
+
+      <div>
+        <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity *</label>
+        <input id="quantity" type="number" step="0.01" formControlName="quantity"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <div *ngIf="investmentForm.get('quantity')?.touched && investmentForm.get('quantity')?.errors"
+          class="text-red-600 text-xs mt-1">
+          <div *ngIf="investmentForm.get('quantity')?.errors?.['required']">Quantity is required</div>
+          <div *ngIf="investmentForm.get('quantity')?.errors?.['min']">Must be greater than 0</div>
         </div>
-        
-        <!-- Purchase Price -->
-        <div>
-          <label for="purchasePrice" class="block text-sm font-medium text-gray-700 mb-1">Purchase Price *</label>
-          <input id="purchasePrice" type="number" step="0.01" formControlName="purchasePrice"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-          <div *ngIf="investmentForm.get('purchasePrice')?.touched && investmentForm.get('purchasePrice')?.errors" 
-               class="text-red-600 text-xs mt-1">
-            <div *ngIf="investmentForm.get('purchasePrice')?.errors?.['required']">Purchase price is required</div>
-            <div *ngIf="investmentForm.get('purchasePrice')?.errors?.['min']">Must be greater than 0</div>
-          </div>
+      </div>
+
+      <div>
+        <label for="purchasePrice" class="block text-sm font-medium text-gray-700 mb-1">Purchase Price *</label>
+        <input id="purchasePrice" type="number" step="0.01" formControlName="purchasePrice"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <div *ngIf="investmentForm.get('purchasePrice')?.touched && investmentForm.get('purchasePrice')?.errors"
+          class="text-red-600 text-xs mt-1">
+          <div *ngIf="investmentForm.get('purchasePrice')?.errors?.['required']">Purchase price is required</div>
+          <div *ngIf="investmentForm.get('purchasePrice')?.errors?.['min']">Must be greater than 0</div>
         </div>
-        
-        <!-- Purchase Date -->
-        <div>
-          <label for="purchaseDate" class="block text-sm font-medium text-gray-700 mb-1">Purchase Date *</label>
-          <input id="purchaseDate" type="date" [max]="today" formControlName="purchaseDate"
-                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-          <div *ngIf="investmentForm.get('purchaseDate')?.touched && investmentForm.get('purchaseDate')?.errors" 
-               class="text-red-600 text-xs mt-1">
-            Purchase date is required
-          </div>
+      </div>
+
+      <div>
+        <label for="purchaseDate" class="block text-sm font-medium text-gray-700 mb-1">Purchase Date *</label>
+        <input id="purchaseDate" type="date" [max]="today" formControlName="purchaseDate"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+        <div *ngIf="investmentForm.get('purchaseDate')?.touched && investmentForm.get('purchaseDate')?.errors"
+          class="text-red-600 text-xs mt-1">
+          Purchase date is required
         </div>
-        
-        <!-- Notes -->
-        <div>
-          <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-          <textarea id="notes" formControlName="notes" rows="3"
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-        </div>
-        
-        <!-- Form Actions -->
-        <div class="flex justify-end space-x-3 pt-4">
-          <button type="submit" 
-                  class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+
+      <div>
+        <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+        <textarea id="notes" formControlName="notes" rows="3"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+      </div>
+
+      <div class="flex justify-end space-x-3 pt-4">
+        <button type="submit"
+          class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Submit
+        </button>
+      </div>
+    </form>
   </div>
+</div>

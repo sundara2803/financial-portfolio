@@ -4,5 +4,5 @@ export interface Investment {
     quantity: number;
     purchasePrice: number;
     purchaseDate: string;
-    notes?: string; // Optional field
+    notes?: string;
   }
